@@ -1,21 +1,40 @@
 export const getRealCoordinates = e => {
-  // nativeEvent.offsetX gives inconsistent results when dragging
-  // up and to the left rather than the more natural down and to the
-  // right. The reason could be browser implementation (it is still experimental)
-  // or it could be that nativeEvent offsets are based on target rather than
-  // currentTarget.
-  // To keep consistent behavior of the selector use the bounding client rect.
   const rect = e.currentTarget.getBoundingClientRect();
-  const offsetX = e.clientX - rect.x;
-  const offsetY = e.clientY - rect.y;
 
-  return {
-    x: offsetX,
-    y: offsetY,
-    width: rect.width,
-    height: rect.height,
-  };
+  if (isTouchEvent(e)) {
+    if (isValidTouchEvent(e)) {
+      isTouchMoveEvent(e) && e.preventDefault()
+      const touch = e.targetTouches[0]
+      const offsetX = touch.clientX - rect.x;
+      const offsetY = touch.clientY - rect.y;
+
+      return {
+        x: offsetX,
+        y: offsetY,
+        width: rect.width,
+        height: rect.height,
+      }
+    } else {
+      return {
+        x: 0,
+        y: 0,
+        width: rect.width,
+        height: rect.height,
+      }
+    }
+  } else {
+    const offsetX = e.clientX - rect.x;
+    const offsetY = e.clientY - rect.y;
+
+    return {
+      x: offsetX,
+      y: offsetY,
+      width: rect.width,
+      height: rect.height,
+    };
+  }
 }
+
 export const getMouseRelativeCoordinates = e => {
   // nativeEvent.offsetX gives inconsistent results when dragging
   // up and to the left rather than the more natural down and to the
@@ -40,8 +59,8 @@ const getTouchRelativeCoordinates = e => {
   const boundingRect = e.currentTarget.getBoundingClientRect()
   // https://idiallo.com/javascript/element-postion
   // https://stackoverflow.com/questions/25630035/javascript-getboundingclientrect-changes-while-scrolling
-  const offsetX = touch.pageX - boundingRect.left
-  const offsetY = touch.pageY - (boundingRect.top + window.scrollY)
+  const offsetX = touch.clientX - boundingRect.left
+  const offsetY = touch.clientY - (boundingRect.top + window.scrollY)
 
   return {
     x: clamp(0, 100, (offsetX / boundingRect.width) * 100),

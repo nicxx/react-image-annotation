@@ -102,6 +102,7 @@ export default class Multiple extends Component {
           value={this.state.annotation}
           onChange={this.onChange}
           onSubmit={this.onSubmit}
+          allowTouch
         />
       </div>
     )

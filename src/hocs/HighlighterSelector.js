@@ -67,7 +67,6 @@ function pointerDown(annotation, e) {
       selection: {
         ...annotation.selection,
         mode: 'SELECTING',
-
       }
     }
   } else {

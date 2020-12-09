@@ -20,6 +20,15 @@ export function intersects({ x, y }, geometry, container) {
   })) {
     return true
   }
+  if (geometry.lines.some(e => e.some(e => {
+    if (x * geometry.size.width / 100 < e.x - MARGIN) return false
+    if (y * geometry.size.height / 100 < e.y - MARGIN) return false
+    if (x * geometry.size.width / 100 > e.x + MARGIN) return false
+    if (y * geometry.size.height / 100 > e.y + MARGIN) return false
+    return true
+  }))) {
+    return true
+  }
 
 
 
@@ -56,22 +65,20 @@ export const methods = {
 }
 
 function pointerDown(annotation, e) {
-  if (!annotation.selection) {
-    const { x, y, width, height } = getRealCoordinates(e)
-    return {
-      ...annotation,
-      geometry: {
-        points: [{ x, y }],
-        size: { width, height }
-      },
-      selection: {
-        ...annotation.selection,
-        mode: 'SELECTING',
-
-      }
+  const { x, y, width, height } = getRealCoordinates(e)
+  return {
+    ...annotation,
+    geometry: {
+      ...annotation.geometry || {},
+      lines: [...(annotation.geometry && annotation.geometry.lines || []), annotation.geometry && annotation.geometry.points || []],
+      points: [{ x, y }],
+      size: annotation.geometry && annotation.geometry.size || { width, height }
+    },
+    selection: {
+      ...annotation.selection,
+      showEditor: false,
+      mode: 'SELECTING',
     }
-  } else {
-    return {}
   }
 }
 
@@ -89,7 +96,7 @@ function pointerUp(annotation, e) {
           geometry: {
             ...annotation.geometry,
             x: lastPoint.x,
-            y: lastPoint.y,
+            y: lastPoint.y + 10,
             height: 0
           },
           selection: {
