@@ -64,30 +64,30 @@ export default class Simple extends Component {
 
 ### Props
 
-| Prop                         | Description                                                                                                                                | Default                                            |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- |
+| Prop                         | Description                                                                                                                                | Default                                                                                  |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
 | `src`                        | Image src attribute                                                                                                                        |
 | `alt`                        | Image alt attribute                                                                                                                        |
 | `annotations`                | Array of annotations                                                                                                                       |
 | `value`                      | Annotation object currently being created. See [annotation object](#annotation-object)                                                     |
 | `onChange`                   | `onChange` handler for annotation object                                                                                                   |
 | `onSubmit`                   | `onSubmit` handler for annotation object                                                                                                   |
-| `type`                       | Selector type. See [custom shapes](#using-custom-shapes)                                                                                   | `RECTANGLE`                                        |
-| `allowTouch`                 | Set to `true` to allow the target to handle touch events. This disables one-finger scrolling                                               | `false`                                            |
-| `selectors`                  | An array of selectors. See [adding custom selector logic](#adding-custom-selector-logic)                                                   | `[RectangleSelector, PointSelector, OvalSelector]` |
+| `type`                       | Selector type. See [custom shapes](#using-custom-shapes)                                                                                   | `RECTANGLE`                                                                              |
+| `allowTouch`                 | Set to `true` to allow the target to handle touch events. This disables one-finger scrolling                                               | `false`                                                                                  |
+| `selectors`                  | An array of selectors. See [adding custom selector logic](#adding-custom-selector-logic)                                                   | `[RectangleSelector, PointSelector, OvalSelector, DrawingSelector, HighlighterSelector]` |
 | `activeAnnotations`          | Array of annotations that will be passed as 'active' (active highlight and shows content)                                                  |
-| `activeAnnotationComparator` | Method to compare annotation and `activeAnnotation` item (from `props.activeAnnotations`). Return `true` if it's the annotations are equal | `(a, b) => a === b`                                |
-| `disableAnnotation`          | Set to `true` to disable creating of annotations (note that no callback methods will be called if this is `true`)                          | `false`                                            |
-| `disableSelector`            | Set to `true` to not render `Selector`                                                                                                     | `false`                                            |
-| `disableEditor`              | Set to `true` to not render `Editor`                                                                                                       | `false`                                            |
-| `movingMode`                 | Set to `true` to active moving mode                                                                                                        | `false`                                            |
-| `disableZoom`                | Set to `true` to not active `zoom`                                                                                                         | `false`                                            |
-| `disableOverlay`             | Set to `true` to not render `Overlay`                                                                                                      | `false`                                            |
-| `renderSelector`             | Function that renders `Selector` Component                                                                                                 | See [custom components](#using-custom-components)  |
-| `renderEditor`               | Function that renders `Editor` Component                                                                                                   | See [custom components](#using-custom-components)  |
-| `renderHighlight`            | Function that renders `Highlight` Component                                                                                                | See [custom components](#using-custom-components)  |
-| `renderContent`              | Function that renders `Content`                                                                                                            | See [custom components](#using-custom-components)  |
-| `renderOverlay`              | Function that renders `Overlay`                                                                                                            | See [custom components](#using-custom-components)  |
+| `activeAnnotationComparator` | Method to compare annotation and `activeAnnotation` item (from `props.activeAnnotations`). Return `true` if it's the annotations are equal | `(a, b) => a === b`                                                                      |
+| `disableAnnotation`          | Set to `true` to disable creating of annotations (note that no callback methods will be called if this is `true`)                          | `false`                                                                                  |
+| `disableSelector`            | Set to `true` to not render `Selector`                                                                                                     | `false`                                                                                  |
+| `disableEditor`              | Set to `true` to not render `Editor`                                                                                                       | `false`                                                                                  |
+| `movingMode`                 | Set to `true` to active moving mode                                                                                                        | `false`                                                                                  |
+| `disableZoom`                | Set to `true` to not active `zoom`                                                                                                         | `false`                                                                                  |
+| `disableOverlay`             | Set to `true` to not render `Overlay`                                                                                                      | `false`                                                                                  |
+| `renderSelector`             | Function that renders `Selector` Component                                                                                                 | See [custom components](#using-custom-components)                                        |
+| `renderEditor`               | Function that renders `Editor` Component                                                                                                   | See [custom components](#using-custom-components)                                        |
+| `renderHighlight`            | Function that renders `Highlight` Component                                                                                                | See [custom components](#using-custom-components)                                        |
+| `renderContent`              | Function that renders `Content`                                                                                                            | See [custom components](#using-custom-components)                                        |
+| `renderOverlay`              | Function that renders `Overlay`                                                                                                            | See [custom components](#using-custom-components)                                        |
 | `onMouseUp`                  | `onMouseUp` handler on annotation target                                                                                                   |
 | `onMouseDown`                | `onMouseDown` handler on annotation target                                                                                                 |
 | `onMouseMove`                | `onMouseMove` handler on annotation target                                                                                                 |
@@ -128,7 +128,7 @@ You can view the default renderProps [here](src/components/defaultProps.js)
 
 ## Using custom shapes
 
-`Annotation` supports three shapes by default, `RECTANGLE`, `POINT` and `OVAL`.
+`Annotation` supports three shapes by default, `RECTANGLE`, `POINT`, `HIGHLIGHTER`, `DRAWING` and `OVAL`.
 
 You can switch the shape selector by passing the appropriate `type` as a property. Default shape `TYPE`s are accessible on their appropriate selectors:
 
@@ -137,6 +137,8 @@ import {
   PointSelector,
   RectangleSelector,
   OvalSelector,
+  DrawingSelector,
+  HighlighterSelector,
 } from "react-image-annotation-with-zoom/lib/selectors";
 
 <Annotation type={PointSelector.TYPE} />;

@@ -1,3 +1,17 @@
+## 0.9.16
+
+### Improvements
+
+- Add Drawing
+- Add Highlighter
+- Fix zoom tooltips and others
+
+## 0.9.15
+
+### Improvements
+
+- Build...
+
 ## 0.9.13
 
 ### Improvements
