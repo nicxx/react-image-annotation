@@ -5,7 +5,8 @@ import {
   RectangleSelector,
   OvalSelector,
   DrawingSelector,
-  HighlighterSelector
+  HighlighterSelector,
+  PolygonSelector
 } from '../../../../../src/selectors'
 
 import Button from '../../Button'
@@ -91,6 +92,12 @@ export default class Multiple extends Component {
           active={OvalSelector.TYPE === this.state.type}
         >
           {OvalSelector.TYPE}
+        </Button>
+        <Button
+          onClick={this.onChangeType}
+          active={PolygonSelector.TYPE === this.state.type}
+        >
+          {PolygonSelector.TYPE}
         </Button>
 
         <Annotation
